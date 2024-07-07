@@ -7,7 +7,45 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/*======================*/
+
+.navbar{
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  background-color: #4ea94b;
+}
+
+.navbar-title{
+  margin: 10px;
+  color: white;
+}
+
+.navbar-buttons{
+  margin: 10px;
+}
+
+/*======================*/
+
+.create-note{
+  width: 35%;
+  margin: 20px auto;
+  border-radius: 10px;
+  border: solid 2px rgba(128, 128, 128, 0.223);
+  padding: 10px;
+}
+
+.create-note h1 {
+  text-align: center;
+}
+
+.create-note form{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.create-note form button{
+  margin: auto;
+  width: 30%;
 }
