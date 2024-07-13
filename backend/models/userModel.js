@@ -17,7 +17,7 @@ const userSchema = new Schema({
     type: String,
     require: true
   }
-})
+}, {timestamps: true})
 
 userSchema.statics.signUp = async function(username, email, password) {
   if(!username || !email || !password){

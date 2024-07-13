@@ -1,9 +1,10 @@
 import React from "react";
+import SignupForm from "../components/signup/signupForm.tsx";
 
 export default function Signup() {
   return (
     <div>
-     <h1>signup</h1>
+     <SignupForm/>
     </div>
   )
 }

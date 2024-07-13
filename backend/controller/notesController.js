@@ -11,14 +11,14 @@ const getAllNotes = async (req, res) => {
 const getSingleNote = async (req, res) => {
   const {id} = req.params
 
-  if(!mongoose.Types.ObjectId.isValid({id})){
-    return res.status(404).json({msg: 'No item found with that id'})
+  if(!mongoose.Types.ObjectId.isValid(id)){
+    return res.status(404).json({error: 'No item found with that id'})
   }
 
   const note = await notesModel.findById(id);
 
   if(!note){
-    return res.status(404).json({msg: 'No item found with that id'})
+    return res.status(404).json({error: 'No item found with that id'})
   }
 
   res.status(200).json(note)
@@ -41,7 +41,7 @@ const postNote = async (req, res) => {
   }
 
   try {
-    const user_id = req.user_id
+    const user_id = req.user._id
     const note = await notesModel.create({title, description, user_id})
 
     res.status(201).json(note)
@@ -54,13 +54,13 @@ const deleteNote = async (req, res) => {
   const {id} = req.params
 
   if(!mongoose.Types.ObjectId.isValid(id)){
-    return res.status(404).json({msg: 'No item found with that id'})
+    return res.status(404).json({error: 'No item found with that id'})
   }
 
   const note = await notesModel.findOneAndDelete({_id: id})
 
   if(!note){
-    res.status(400).json({msg: 'Cant delete note'})
+    res.status(400).json({error: 'Cant delete note'})
   }
 
   res.status(200).json(note)
@@ -70,7 +70,7 @@ const patchNote = async (req, res) => {
   const {id} = req.params
 
   if(!mongoose.Types.ObjectId.isValid(id)){
-    return res.status(404).json({msg: 'no note found by that id'})
+    return res.status(404).json({error: 'no note found by that id'})
   }
 
   const note = await notesModel.findOneAndUpdate({_id: id}, {
@@ -78,7 +78,7 @@ const patchNote = async (req, res) => {
   })
 
   if(!note){
-    return res.status(400).json({msg: 'Note cant be updated'})
+    return res.status(400).json({error: 'Note cant be updated'})
   }
 
   res.status(200).json(note)

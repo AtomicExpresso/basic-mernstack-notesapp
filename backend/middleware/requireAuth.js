@@ -8,7 +8,7 @@ const requireAuth = async (req, res, next) => {
 
   // Check if the authorization token is present in the request headers
   if (!authorization) {
-    return res.status(401).json({ msg: 'Authorization required, did you include a token in your request?' });
+    return res.status(401).json({ error: 'Authorization required, did you include a token in your request?' });
   }
 
   // Extract the token from the authorization header (assuming the format is "Bearer <token>")

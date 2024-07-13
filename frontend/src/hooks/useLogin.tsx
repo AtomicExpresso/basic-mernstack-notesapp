@@ -27,7 +27,7 @@ export default function useLogin() {
 
     if(!response.ok){
       setIsLoading(false);
-      setError(`Error: ${data.error}`)
+      setError(`${data}`)
     }
     if(response.ok){
       //Save user to localstorage

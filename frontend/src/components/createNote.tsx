@@ -1,12 +1,19 @@
 'use client'
 
 import React, {useState} from "react";
+import useNotesContext from "../hooks/useNotesContext.tsx";
+import useAuthContext from "../hooks/useAuthContext.tsx";
 
 export default function CreateNote(){
+  const [error, setError] = useState<null | string>(null);
   const [formState, setFormState] = useState({
     title: '',
     description: ''
-  })
+  });
+
+  const { dispatch } = useNotesContext();
+  const { user } = useAuthContext();
+
 
   const HandleFormChange = (e) => {
     const {name, value} = e.target
@@ -20,8 +27,44 @@ export default function CreateNote(){
     })
   }
 
-  const HandleSubmit = (e) => {
+  const HandleSubmit = async (e) => {
     e.preventDefault();
+
+    if(!user){
+      setError('You must be logged in');
+      return
+    }
+
+    const note = {title: formState.title, description: formState.description}
+
+    const response = await fetch('http://localhost:4000/api/notes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': "application/json",
+        "Authorization": `Bearer ${user.token}`
+      },
+      body: JSON.stringify(note)
+    })
+
+    const data = await response.json();
+
+    if(!response.ok){
+      setError(data.error);
+    }
+
+    console.log(JSON.stringify(note))
+
+    if(response.ok){
+      setFormState(prevState => {
+        const newState = {
+          title: '',
+          description: ''
+        }
+        return newState
+      })
+
+      dispatch({type: 'CREATE_NOTE', payload: data})
+    }
   }
   
   return (

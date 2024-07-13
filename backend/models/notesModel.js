@@ -9,7 +9,11 @@ const notesSchema = new Schema({
   description: {
     type: String,
     required: true
+  },
+  user_id:{
+    type: String,
+    required: true
   }
-})
+}, {timestamps: true})
 
-module.exports = ('notesModel', notesSchema)
+module.exports = mongoose.model('notesModel', notesSchema)
