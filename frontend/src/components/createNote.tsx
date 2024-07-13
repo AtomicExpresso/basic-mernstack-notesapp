@@ -62,9 +62,14 @@ export default function CreateNote(){
         }
         return newState
       })
+      setError(null)
 
       dispatch({type: 'CREATE_NOTE', payload: data})
     }
+  }
+
+  const incorrectStyle = {
+    border: "solid 2px #f93d5d"
   }
   
   return (
@@ -75,18 +80,35 @@ export default function CreateNote(){
         <input 
           type="text"
           name="title"
+          value={formState.title}
           onChange={(e) => HandleFormChange(e)}
+          style={
+            error === 'Title must be more then 2 characters' ||
+            error === 'Please fill the required fields' ? 
+              incorrectStyle : {border: ''}
+          }
         >
         </input>
         <label htmlFor="description">Description</label>
         <textarea 
           name="description"
+          value={formState.description}
           onChange={(e) => HandleFormChange(e)}
+          style={
+            error === 'Description must be more then 2 characters' ||
+            error === 'Please fill the required fields' ? 
+              incorrectStyle : {border: ''}
+          }
         >
         </textarea>
         <button type="submit" className="btn btn-success">
           Submit
         </button>
+        {error ? 
+          <div className="login-error-message">
+          <h2>{error}</h2>
+          </div>
+        : null}
       </form>
     </div>
   )

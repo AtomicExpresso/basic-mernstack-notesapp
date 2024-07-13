@@ -29,15 +29,23 @@ const postNote = async (req, res) => {
 
   let emptyFields = [];
 
-  if(!title){
+  if(!title || title.length <= 0){
     emptyFields.push('title')
   }
-  if(!description){
+  if(!description || description.length <= 0){
     emptyFields.push('description')
   }
 
   if(emptyFields.length > 0){
-    res.status(400).json({msg: 'Please fill the required fields', emptyFields})
+    return res.status(400).json({error: 'Please fill the required fields', emptyFields})
+  }
+
+  if(description.length <= 2){
+    return res.status(400).json({error: 'Description must be more then 2 characters'})
+  }
+
+  if(title.length <= 2){
+    return res.status(400).json({error: 'Title must be more then 2 characters'})
   }
 
   try {
@@ -46,7 +54,7 @@ const postNote = async (req, res) => {
 
     res.status(201).json(note)
   } catch (error){
-    res.status(400).json(error.message)
+    return res.status(400).json(error.message)
   }
 }
 
