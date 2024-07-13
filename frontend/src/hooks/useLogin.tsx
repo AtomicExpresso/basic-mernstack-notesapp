@@ -20,9 +20,6 @@ export default function useLogin() {
     })
 
     const data = await response.json();
-    //Test account (will delete later)
-    //username: Mario
-    //pass: ABCabc123!
     console.log(data)
 
     if(!response.ok){
